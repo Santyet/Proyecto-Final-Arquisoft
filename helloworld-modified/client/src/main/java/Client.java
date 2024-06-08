@@ -1,7 +1,6 @@
 import com.zeroc.Ice.ObjectPrx;
 
 import Demo.PrinterCallbackPrx;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -32,50 +31,20 @@ public class Client
                 String client = System.getProperty("user.name") + ":" + java.net.InetAddress.getLocalHost().getHostName() + "=";
 
                 while (true) {
-                    System.out.print("Enter message ('exit' to quit or 'atr' to show attributes'): ");
+                    System.out.print("Enter a function to integrate ('exit' to quit): \n");
                     String userInput = consoleInput.readLine();
+                    if (!userInput.equals("exit")) {
+                        System.out.print("Enter lower limit: \n");
+                        double lowerLimit = Double.parseDouble(consoleInput.readLine());
 
-                    String message = client + userInput;
+                        System.out.print("Enter upper limit: \n");
+                        double upperLimit = Double.parseDouble(consoleInput.readLine());
+                        String message = client + userInput;
 
-                    service.printString(message,clprx);
-
-                    if ("exit".equalsIgnoreCase(userInput)) {
+                        service.printString(message,lowerLimit, upperLimit, clprx);
+                    } else {
                         System.out.println("Bye bye!");
                         break;
-                    }
-
-                    if ("atr".equalsIgnoreCase(userInput)) {
-
-                        int requests = 1;
-                        double start = System.currentTimeMillis();
-                        double end = 0;
-                        int unprocessed = 0;
-                        int processed = 0;
-                        double latency = 0;
-
-                        while (2000 > end - start){
-                            double startRequest = System.currentTimeMillis();
-                            try {
-                                service.printString(client + " is testing: " + userInput, clprx);
-                                processed++;
-                            } catch (Exception e) {
-                                unprocessed++;
-                            };
-                            end = System.currentTimeMillis();
-
-                            System.out.println("\nRequest Number: " + requests);
-                            requests++;
-                            System.out.println("Response Time (ms): " + (end - startRequest));
-
-                            latency += end - startRequest;
-                        }
-
-                        System.out.println("\n\n" + "Processed Requests: " + processed);
-                        System.out.println("\n" + "Unprocessed Requests: " + unprocessed);
-                        System.out.println("\n" + "Unprocessed Rate: " + (unprocessed/2000)*100 + "%");
-                        System.out.println("\n" + "Average Response Time: " + latency/ (double) (unprocessed + processed));
-                        System.out.println("\n" + "A total of " + (unprocessed + processed) + " requests were sent in 2000 ms");
-
                     }
                 }
             } catch(Exception e){

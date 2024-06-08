@@ -3,6 +3,5 @@
 .vscode
 .settings
 .project
-
 # Ignore Gradle build output directory
 build

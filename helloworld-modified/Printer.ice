@@ -7,6 +7,6 @@ module Demo
 
     interface Printer
     {
-        string printString(string s, PrinterCallback* cb);
+        string printString(string s, double lowerLimit, double upperLimit, PrinterCallback* cb);
     }
 }
