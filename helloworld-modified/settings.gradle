@@ -9,4 +9,5 @@
 
 rootProject.name = 'printer'
 include 'client'
-include 'server'
+include 'master'
+include 'worker'

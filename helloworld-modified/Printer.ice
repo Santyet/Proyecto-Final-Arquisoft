@@ -9,4 +9,8 @@ module Demo
     {
         string printString(string s, double lowerLimit, double upperLimit, PrinterCallback* cb);
     }
+
+    interface Worker {
+            string calculateIntegral(string expression, double lowerLimit, double upperLimit);
+        }
 }
