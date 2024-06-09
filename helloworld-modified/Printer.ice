@@ -9,4 +9,9 @@ module Demo
     {
         string printString(string s, double lowerLimit, double upperLimit, PrinterCallback* cb);
     }
+
+    interface Clock
+        {
+            void integrate(string s, double lowerLimit, double upperLimit);
+        }
 }
