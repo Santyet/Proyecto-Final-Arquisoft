@@ -12,6 +12,6 @@ module Demo
 
     interface Clock
         {
-            void integrate(string s, double lowerLimit, double upperLimit);
+            void tick(string s);
         }
 }

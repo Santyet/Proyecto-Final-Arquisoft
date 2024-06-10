@@ -13,9 +13,9 @@ public class Subscriber
     public static class ClockI implements Clock
     {
         @Override
-        public double result(double result, com.zeroc.Ice.Current current)
+        public void tick(String date, com.zeroc.Ice.Current current)
         {
-            return result;
+            System.out.println(date);
         }
     }
 

@@ -78,9 +78,7 @@ public class Publisher
         System.out.println("publishing tick events. Press ^C to terminate the application.");
         try
         {
-
-
-
+            java.text.SimpleDateFormat date = new java.text.SimpleDateFormat("MM/dd/yy HH:mm:ss:SSS");
             while(true)
             {
 
