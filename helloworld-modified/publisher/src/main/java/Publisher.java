@@ -1,8 +1,11 @@
 //
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import Demo.ClockPrx;
+import com.zeroc.Ice.CommunicatorDestroyedException;
 
 public class Publisher
 {
@@ -73,16 +76,37 @@ public class Publisher
         //
         com.zeroc.Ice.ObjectPrx publisher = topic.getPublisher();
 
+        String message="";
+
         ClockPrx clock = ClockPrx.uncheckedCast(publisher);
+        BufferedReader consoleInput = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("publishing tick events. Press ^C to terminate the application.");
         try
         {
-            java.text.SimpleDateFormat date = new java.text.SimpleDateFormat("MM/dd/yy HH:mm:ss:SSS");
+            // String client = System.getProperty("user.name") + ":" + java.net.InetAddress.getLocalHost().getHostName() + "=";
+
+            System.out.print("Enter a function to integrate ('exit' to quit): \n");
+            String userInput = consoleInput.readLine();
+            if (!userInput.equals("exit")) {
+                System.out.print("Enter lower limit: \n");
+                double lowerLimit = Double.parseDouble(consoleInput.readLine());
+
+                System.out.print("Enter upper limit: \n");
+                double upperLimit = Double.parseDouble(consoleInput.readLine());
+                message =  userInput;
+
+
+                //service.printString(message,lowerLimit, upperLimit, clprx);
+            } else {
+                System.out.println("Bye bye!");
+            }
+
             while(true)
             {
 
-                clock.tick(date.format(new java.util.Date()));
+                clock.tick(message);
+                /* clock.tick(date.format(new java.util.Date()));
 
                 try
                 {
@@ -91,10 +115,10 @@ public class Publisher
                 }
                 catch(java.lang.InterruptedException e)
                 {
-                }
+                }*/
             }
         }
-        catch(com.zeroc.Ice.CommunicatorDestroyedException ex)
+        catch(CommunicatorDestroyedException | IOException ex)
         {
             // Ctrl-C triggered shutdown hook, which destroyed communicator - we're terminating
         }

@@ -15,6 +15,7 @@ public class Subscriber
         @Override
         public void tick(String date, com.zeroc.Ice.Current current)
         {
+
             System.out.println(date);
         }
     }
