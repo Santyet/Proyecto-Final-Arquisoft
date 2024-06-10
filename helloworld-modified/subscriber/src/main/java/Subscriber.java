@@ -7,16 +7,22 @@ import java.util.UUID;
 import com.zeroc.Ice.Util;
 
 import Demo.Clock;
+import Demo.MasterPrx;
 
 public class Subscriber
 {
+    public static com.zeroc.Ice.Communicator communicator;
+
     public static class ClockI implements Clock
     {
-        @Override
-        public void tick(String date, com.zeroc.Ice.Current current)
-        {
 
+        @Override
+        public String tick(String date, com.zeroc.Ice.Current current)
+        {
             System.out.println(date);
+            Demo.MasterPrx master = Demo.MasterPrx.checkedCast(communicator.propertyToProxy("Master.Proxy"));
+            master.getPartition();
+            return date;
         }
     }
 

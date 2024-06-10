@@ -1,16 +1,21 @@
 <state>
-  <timestamp value='1709746720787' />
+  <timestamp value='1718063493287' />
   <sourceSet name='default'>
-    <source name='/home/swarch/Downloads/helloworld-modified/Printer.ice'>
-      <file name='/home/swarch/Downloads/helloworld-modified/client/build/generated-src/Demo/Response.java' />
-      <file name='/home/swarch/Downloads/helloworld-modified/client/build/generated-src/Demo/Callback.java' />
-      <file name='/home/swarch/Downloads/helloworld-modified/client/build/generated-src/Demo/Printer.java' />
-      <file name='/home/swarch/Downloads/helloworld-modified/client/build/generated-src/Demo/CallbackPrx.java' />
-      <file name='/home/swarch/Downloads/helloworld-modified/client/build/generated-src/Demo/_CallbackPrxI.java' />
-      <file name='/home/swarch/Downloads/helloworld-modified/client/build/generated-src/Demo/PrinterPrx.java' />
-      <file name='/home/swarch/Downloads/helloworld-modified/client/build/generated-src/Demo/_PrinterPrxI.java' />
+    <source name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\Printer.ice'>
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\PrinterCallback.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\Printer.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\Clock.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\Master.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\PrinterCallbackPrx.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\_PrinterCallbackPrxI.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\PrinterPrx.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\_PrinterPrxI.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\ClockPrx.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\_ClockPrxI.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\MasterPrx.java' />
+      <file name='C:\Users\santy\OneDrive\Documents\Icesi\SEMESTRE6\arquisoft\proyecto-final\Proyecto-Final-Arquisoft\helloworld-modified\client\build\generated-src\Demo\_MasterPrxI.java' />
     </source>
-    <arg value='/opt/Ice-3.7.6/bin/slice2java' />
-    <arg value='-I/opt/Ice-3.7.6/slice' />
+    <arg value='C:\Program Files\ZeroC\Ice-3.7.10\\bin\slice2java.exe' />
+    <arg value='-IC:\Program Files\ZeroC\Ice-3.7.10\\slice' />
   </sourceSet>
 </state>

@@ -4,8 +4,10 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import Demo.ClockPrx;
+import Demo.*;
 import com.zeroc.Ice.CommunicatorDestroyedException;
+import com.zeroc.Ice.Current;
+import com.zeroc.Ice.ObjectPrx;
 
 public class Publisher
 {
@@ -25,12 +27,45 @@ public class Publisher
             // Install shutdown hook to (also) destroy communicator during JVM shutdown.
             // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
+            com.zeroc.Ice.ObjectAdapter publisherAdapter = communicator.createObjectAdapter("Master");
+            com.zeroc.Ice.Object object = new MasterI();
+
+            publisherAdapter.add(object, com.zeroc.Ice.Util.stringToIdentity("publi"));
+
             Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
 
             status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
         }
         System.exit(status);
     }
+
+    public static class MasterI implements Master {
+
+        @Override
+        public String getPartition(com.zeroc.Ice.Current current) {
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            return "";
+        }
+
+        @Override
+        public void calculateIntervals(Current current) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'calculateIntervals'");
+        }
+
+        @Override
+        public void addPartialResult(double d, Current current) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'addPartialResult'");
+        }
+
+        @Override
+        public void getTask(Current current) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getTask'");
+        };
+    }
+
 
     public static void usage()
     {
@@ -81,41 +116,29 @@ public class Publisher
         ClockPrx clock = ClockPrx.uncheckedCast(publisher);
         BufferedReader consoleInput = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("publishing tick events. Press ^C to terminate the application.");
         try
         {
-            // String client = System.getProperty("user.name") + ":" + java.net.InetAddress.getLocalHost().getHostName() + "=";
 
             System.out.print("Enter a function to integrate ('exit' to quit): \n");
-            String userInput = consoleInput.readLine();
-            if (!userInput.equals("exit")) {
-                System.out.print("Enter lower limit: \n");
-                double lowerLimit = Double.parseDouble(consoleInput.readLine());
 
-                System.out.print("Enter upper limit: \n");
-                double upperLimit = Double.parseDouble(consoleInput.readLine());
-                message =  userInput;
-
-
-                //service.printString(message,lowerLimit, upperLimit, clprx);
-            } else {
-                System.out.println("Bye bye!");
-            }
-
-            while(true)
+            while(message!="exit")
             {
+                String userInput = consoleInput.readLine();
+                if (!userInput.equals("exit")) {
+                    System.out.print("Enter lower limit: \n");
+                    double lowerLimit = Double.parseDouble(consoleInput.readLine());
 
-                clock.tick(message);
-                /* clock.tick(date.format(new java.util.Date()));
+                    System.out.print("Enter upper limit: \n");
+                    double upperLimit = Double.parseDouble(consoleInput.readLine());
+                    message =  userInput;
 
-                try
-                {
-                    Thread.currentThread();
-                    Thread.sleep(1000);
+                } else {
+                    System.out.println("Bye bye!");
+                    break;
                 }
-                catch(java.lang.InterruptedException e)
-                {
-                }*/
+                int x = topic.getSubscribers().length;
+                clock.tick(message);
+            
             }
         }
         catch(CommunicatorDestroyedException | IOException ex)
