@@ -1,6 +1,6 @@
 #Topic manager
 TopicManager.Proxy=DemoIceStorm/TopicManager:default -h 10.147.19.33 -p 10000
 #Subscriber
-Clock.Subscriber.Endpoints= tcp -h localhost
+Clock.Subscriber.Endpoints= tcp -h 10.147.19.33
 #Master method
 MasterI.Proxy=MasterService:tcp -h 10.147.19.33 -p 9666

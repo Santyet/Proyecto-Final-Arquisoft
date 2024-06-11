@@ -48,10 +48,13 @@ public class Worker
 
         @Override
         public void processTask(Task task, com.zeroc.Ice.Current current){
+            System.out.println("Im about to process task");
             service.addPartialResult(integrate(task.funct, task.lowerLimit, task.upperLimit, task.approach));
+            System.out.println("I just added my partial result");
         };
 
         private double integrate(String expression, double lowerLimit, double upperLimit, int approach) {
+            System.out.println("Im starting to integrate");
             UnivariateFunction function = new UnivariateFunction() {
                 public double value(double x) {
                     Expression e = new ExpressionBuilder(expression)

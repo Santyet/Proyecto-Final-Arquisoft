@@ -3,7 +3,7 @@ Printer.Endpoints=tcp -p 9333
 #Master endpoint
 MasterI.Endpoints=tcp -h 10.147.19.33 -p 9666
 #Default host
-Ice.Default.Host=localhost
+Ice.Default.Host=10.147.19.33
 #Ice ThreadPool
 Ice.ThreadPool.Server.Size=10
 #Topic manager

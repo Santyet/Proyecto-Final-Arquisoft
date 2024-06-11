@@ -1,6 +1,6 @@
 #Where to call printer method
 Printer.Proxy=SimplePrinter:tcp -p 9333
 #Where to call callback
-Callback.Endpoints=tcp -h localhost -p 9125
+Callback.Endpoints=tcp -h 10.147.19.33 -p 9125
 #Where is server
-Ice.Default.Host=localhost
+Ice.Default.Host=10.147.19.33
