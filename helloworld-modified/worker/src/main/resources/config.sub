@@ -1,6 +1,6 @@
-#Where is topic manager
+#Topic manager
 TopicManager.Proxy=DemoIceStorm/TopicManager:default -h localhost -p 10000
-#Where is subscriber
+#Subscriber
 Clock.Subscriber.Endpoints= tcp -h localhost
-#Where to call printer method
+#Master method
 MasterI.Proxy=MasterService:tcp -p 9666

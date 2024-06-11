@@ -1,17 +1,12 @@
-#Where is printer endpoint
+#Printer endpoint
 Printer.Endpoints=tcp -p 9333
-
-#Where is master endpoint
+#Master endpoint
 MasterI.Endpoints=tcp -p 9666
-
 #Default host
 Ice.Default.Host=localhost
-
 #Ice ThreadPool
 Ice.ThreadPool.Server.Size=10
-
-#Where is topic manager
+#Topic manager
 TopicManager.Proxy=DemoIceStorm/TopicManager:default -h localhost  -p 10000
-
-#Where to call printer method
+#Master method
 MasterI.Proxy=MasterService:tcp -p 9666

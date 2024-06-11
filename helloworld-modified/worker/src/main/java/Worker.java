@@ -88,9 +88,6 @@ public class Worker
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
         communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
-        //
-        // Destroy communicator during JVM shutdown
-        //
 
         Demo.MasterPrx service = Demo.MasterPrx.checkedCast(communicator.propertyToProxy("MasterI.Proxy")).ice_twoway();
 
@@ -116,9 +113,6 @@ public class Worker
         {
             System.exit(status);
         }
-        //
-        // Else the application waits for Ctrl-C to destroy the communicator
-        //
     }
 
     private static int run(com.zeroc.Ice.Communicator communicator, Thread destroyHook, Demo.MasterPrx service)
@@ -126,17 +120,13 @@ public class Worker
 
         String topicName = "time";
 
-        com.zeroc.IceStorm.TopicManagerPrx manager = com.zeroc.IceStorm.TopicManagerPrx.checkedCast(
-                communicator.propertyToProxy("TopicManager.Proxy"));
+        com.zeroc.IceStorm.TopicManagerPrx manager = com.zeroc.IceStorm.TopicManagerPrx.checkedCast(communicator.propertyToProxy("TopicManager.Proxy"));
         if(manager == null)
         {
             System.err.println("invalid proxy");
             return 1;
         }
 
-        //
-        // Retrieve the topic.
-        //
         com.zeroc.IceStorm.TopicPrx topic;
         try
         {
@@ -156,22 +146,7 @@ public class Worker
         }
 
         com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Clock.Subscriber");
-
-        //
-        // Add a servant for the Ice object. If --id is used the
-        // identity comes from the command line, otherwise a UUID is
-        // used.
-        //
-        // id is not directly altered since it is used below to detect
-        // whether subscribeAndGetPublisher can raise
-        // AlreadySubscribed.
-        //
-
         com.zeroc.Ice.ObjectPrx subscriber = adapter.add(new StaticWorker(service), Util.stringToIdentity(UUID.randomUUID().toString()));
-
-        //
-        // Activate the object adapter before subscribing.
-        //
         adapter.activate();
 
         java.util.Map<String, String> qos = new java.util.HashMap<>();
@@ -196,9 +171,7 @@ public class Worker
             return 1;
         }
 
-        //
-        // Replace the shutdown hook to unsubscribe during JVM shutdown
-        //
+
         final com.zeroc.IceStorm.TopicPrx topicF = topic;
         final com.zeroc.Ice.ObjectPrx subscriberF = subscriber;
         Runtime.getRuntime().addShutdownHook(new Thread(() ->
@@ -213,7 +186,7 @@ public class Worker
                 communicator.destroy();
             }
         }));
-        Runtime.getRuntime().removeShutdownHook(destroyHook); // remove old destroy-only shutdown hook
+        Runtime.getRuntime().removeShutdownHook(destroyHook);
 
         return 0;
     }

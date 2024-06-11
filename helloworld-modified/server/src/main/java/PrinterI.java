@@ -19,7 +19,7 @@ public class PrinterI implements Printer {
 
     private PrinterCallbackPrx currentCallback;
     private java.util.concurrent.Executors Executors;
-    private ExecutorService threadPool = Executors.newFixedThreadPool(6);
+    private ExecutorService threadPool = Executors.newFixedThreadPool(12);
     private String username;
 
     public String printString(String s, double lowerLimit, double upperLimit, int approach, PrinterCallbackPrx client, com.zeroc.Ice.Current current) {

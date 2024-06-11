@@ -22,10 +22,6 @@ public class MasterI implements Master
     private Integer currentNumOfTasks = 0;
 
     public MasterI(com.zeroc.Ice.Communicator communicator){
-        //
-        // Install shutdown hook to (also) destroy communicator during JVM shutdown.
-        // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
-        //
 
         Runtime.getRuntime().addShutdownHook(new Thread(() ->
         {
@@ -39,7 +35,7 @@ public class MasterI implements Master
     @Override
     public void createTask(Task task, com.zeroc.Ice.Current current){
 
-        System.out.println("Lower: "+task.lowerLimit + " Upper: " + task.upperLimit + " number of worker: " + workerCount );
+        System.out.println("Lower: " + task.lowerLimit + " Upper: " + task.upperLimit + " number of worker: " + workerCount );
 
         if(workerCount.get() > 1){
 
@@ -52,50 +48,22 @@ public class MasterI implements Master
             boolean flag = false;
 
             do{
-                if ( interval >= 5 && interval <= 10 ){
-                    double fakeUpper = lower + interval;
-                    for(int i = 0; i < numOfTasks; i ++  ){
+                double fakeUpper = lower + interval;
+                for(int i = 0; i < numOfTasks; i ++  ){
 
-                        if(i == numOfTasks - 1){
-                            queue.add(new Task(task.funct, lower, upper, task.approach));
-                        }else {
-                            queue.add(new Task(task.funct, lower, fakeUpper, task.approach));
-                        }
-
-                        lower= lower + interval;
-                        fakeUpper = fakeUpper + interval;
+                    if(i == numOfTasks - 1){
+                        queue.add(new Task(task.funct, lower, upper, task.approach));
+                    }else {
+                        queue.add(new Task(task.funct, lower, fakeUpper, task.approach));
                     }
 
-                    flag = true;
-                    currentNumOfTasks = numOfTasks;
-                    launchWorkers(current);
-
-                }else if(interval >10 || numOfWorkers == 1){
-
-                    double fakeUpper = lower + interval;
-                    for(int i = 0; i < numOfTasks; i ++  ){
-
-                        if(i == numOfTasks - 1){
-                            queue.add(new Task(task.funct, lower, upper, task.approach));
-                        }else {
-                            queue.add(new Task(task.funct, lower, fakeUpper, task.approach));
-                        }
-
-                        lower= lower + interval;
-                        fakeUpper = fakeUpper + interval;
-                    }
-
-                    flag = true;
-                    currentNumOfTasks = numOfTasks;
-                    launchWorkers(current);
-                }
-                else {
-                    numOfWorkers = numOfWorkers / 2;
-                    interval = numOfUnits / numOfWorkers;
-                    numOfTasks = numOfUnits / interval;
+                    lower = lower + interval;
+                    fakeUpper = fakeUpper + interval;
                 }
 
-
+                flag = true;
+                currentNumOfTasks = numOfTasks;
+                launchWorkers(current);
             }while (!flag);
 
         }else{
@@ -174,9 +142,6 @@ public class MasterI implements Master
             return null;
         }
 
-        //
-        // Retrieve the topic.
-        //
         com.zeroc.IceStorm.TopicPrx topic;
         try
         {
@@ -195,10 +160,6 @@ public class MasterI implements Master
             }
         }
 
-        //
-        // Get the topic's publisher object, and create a Clock proxy with
-        // the mode specified as an argument of this application.
-        //
         com.zeroc.Ice.ObjectPrx publisher = topic.getPublisher();
 
         WorkerIPrx worker = WorkerIPrx.uncheckedCast(publisher);
