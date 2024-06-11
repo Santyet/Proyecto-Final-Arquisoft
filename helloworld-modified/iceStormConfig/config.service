@@ -2,7 +2,7 @@
 IceStorm.InstanceName=DemoIceStorm
 
 
-IceStorm.TopicManager.Endpoints=default -h localhost -p 10000
+IceStorm.TopicManager.Endpoints=default -h 10.147.19.208 -p 10000
 
 #
 # This property defines the endpoints on which the topic
@@ -10,7 +10,7 @@ IceStorm.TopicManager.Endpoints=default -h localhost -p 10000
 # IceStorm instances this must run on a fixed port (or use
 # IceGrid).
 #
-IceStorm.Publish.Endpoints=tcp -h localhost -p 10001:udp -h localhost -p 10001
+IceStorm.Publish.Endpoints=tcp -h 10.147.19.208 -p 10001:udp -h 10.147.19.208 -p 10001
 
 
 

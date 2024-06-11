@@ -7,7 +7,7 @@ module Demo
 
     interface Printer
     {
-        string printString(string s, double lowerLimit, double upperLimit, int approach, PrinterCallback* cb);
+        string printString(string s, long startTime, double lowerLimit, double upperLimit, int approach, PrinterCallback* cb);
     }
     class Task
         {

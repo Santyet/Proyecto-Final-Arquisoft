@@ -22,7 +22,7 @@ public class PrinterI implements Printer {
     private ExecutorService threadPool = Executors.newFixedThreadPool(12);
     private String username;
 
-    public String printString(String s, double lowerLimit, double upperLimit, int approach, PrinterCallbackPrx client, com.zeroc.Ice.Current current) {
+    public String printString(String s, long clientTime, double lowerLimit, double upperLimit, int approach, PrinterCallbackPrx client, com.zeroc.Ice.Current current) {
 
         com.zeroc.Ice.Communicator communicator = current.adapter.getCommunicator();
         Demo.MasterPrx service = Demo.MasterPrx.checkedCast(communicator.propertyToProxy("MasterI.Proxy"));
@@ -32,7 +32,7 @@ public class PrinterI implements Printer {
         Runnable run = new Thread(() -> {
             try {
                 currentCallback = client;
-                String response = processInput(s, lowerLimit, upperLimit, approach, client, service, current);
+                String response = processInput(s, clientTime, lowerLimit, upperLimit, approach, client, service, current);
                 client.callbackString(response);
 
             } catch (Exception e) {
@@ -45,11 +45,16 @@ public class PrinterI implements Printer {
         return "Request processed";
     }
 
-    private String processInput(String s, double lowerLimit, double upperLimit, int approach, PrinterCallbackPrx client, Demo.MasterPrx service, com.zeroc.Ice.Current current) {
+    private String processInput(String s, long clientTime, double lowerLimit, double upperLimit, int approach, PrinterCallbackPrx client, Demo.MasterPrx service, com.zeroc.Ice.Current current) {
         String[] parts = s.split("=");
         Task task = new Task(parts[1], lowerLimit, upperLimit, approach);
         service.createTask(task);
         double answer = service.processPartialResults();
+
+        long endTime = System.currentTimeMillis();
+        double processingTime = (endTime - clientTime)  / 1000.0;
+
+        System.out.println("Processing time: " + processingTime + " seconds");
 
         return "Answer: " + answer;
     }

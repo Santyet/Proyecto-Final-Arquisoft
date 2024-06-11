@@ -44,7 +44,8 @@ public class Client
                         int approach = Integer.parseInt(consoleInput.readLine());
 
                         String message = client + userInput;
-                        service.printString(message,lowerLimit, upperLimit, approach, clprx);
+                        long starTime = System.currentTimeMillis();
+                        service.printString(message, starTime, lowerLimit, upperLimit, approach, clprx);
                     } else {
                         System.out.println("Bye bye!");
                         break;
