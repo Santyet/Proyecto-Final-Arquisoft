@@ -39,9 +39,12 @@ public class Client
 
                         System.out.print("Enter upper limit: \n");
                         double upperLimit = Double.parseDouble(consoleInput.readLine());
-                        String message = client + userInput;
 
-                        service.printString(message,lowerLimit, upperLimit, clprx);
+                        System.out.print("Type integral approach: 1. Simpson 2. Romberg 3. Trapezoid : \n");
+                        int approach = Integer.parseInt(consoleInput.readLine());
+
+                        String message = client + userInput;
+                        service.printString(message,lowerLimit, upperLimit, approach, clprx);
                     } else {
                         System.out.println("Bye bye!");
                         break;

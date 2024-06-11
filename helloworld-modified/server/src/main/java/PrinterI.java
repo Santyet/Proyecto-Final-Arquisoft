@@ -22,14 +22,17 @@ public class PrinterI implements Printer {
     private ExecutorService threadPool = Executors.newFixedThreadPool(6);
     private String username;
 
-    public String printString(String s, double lowerLimit, double upperLimit, PrinterCallbackPrx client, com.zeroc.Ice.Current current) {
+    public String printString(String s, double lowerLimit, double upperLimit, int approach, PrinterCallbackPrx client, com.zeroc.Ice.Current current) {
 
+        com.zeroc.Ice.Communicator communicator = current.adapter.getCommunicator();
+        Demo.MasterPrx service = Demo.MasterPrx.checkedCast(communicator.propertyToProxy("MasterI.Proxy"));
+        if (service == null) {
+            throw new Error("Invalid proxy");
+        }
         Runnable run = new Thread(() -> {
             try {
                 currentCallback = client;
-
-                String response = process(s, lowerLimit, upperLimit);
-
+                String response = processInput(s, lowerLimit, upperLimit, approach, client, service, current);
                 client.callbackString(response);
 
             } catch (Exception e) {
@@ -42,40 +45,13 @@ public class PrinterI implements Printer {
         return "Request processed";
     }
 
-    private String process(String s, double lowerLimit, double upperLimit) {
-
+    private String processInput(String s, double lowerLimit, double upperLimit, int approach, PrinterCallbackPrx client, Demo.MasterPrx service, com.zeroc.Ice.Current current) {
         String[] parts = s.split("=");
-        try {
-            String integralFunction = parts[1];
-            UnivariateFunction function = new UnivariateFunction() {
-                public double value(double x) {
-                    Expression e = new ExpressionBuilder(integralFunction)
-                            .variables("x")
-                            .build()
-                            .setVariable("x", x);
-                    return e.evaluate();
-                }
-            };
+        Task task = new Task(parts[1], lowerLimit, upperLimit, approach);
+        service.createTask(task);
+        double answer = service.processPartialResults();
 
-            // Integración usando el método de Simpson
-            SimpsonIntegrator simpsonIntegrator = new SimpsonIntegrator();
-            double resultSimpson = simpsonIntegrator.integrate(1000, function, lowerLimit, upperLimit);
-            System.out.println("Resultado usando Simpson: " + resultSimpson);
-
-            // Integración usando el método del Trapecio
-            TrapezoidIntegrator trapezoidIntegrator = new TrapezoidIntegrator();
-            double resultTrapezoid = trapezoidIntegrator.integrate(1000, function, lowerLimit, upperLimit);
-            System.out.println("Resultado usando Trapecio: " + resultTrapezoid);
-
-            // Integración usando el método de Romberg
-            RombergIntegrator rombergIntegrator = new RombergIntegrator();
-            double resultRomberg = rombergIntegrator.integrate(1000, function, lowerLimit, upperLimit);
-            System.out.println("Resultado usando Romberg: " + resultRomberg);
-
-        } catch (Exception e) {
-            System.out.println("Exception");
-        }
-        return "";
+        return "Answer: " + answer;
     }
 
 }
