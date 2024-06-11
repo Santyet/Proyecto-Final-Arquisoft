@@ -4,10 +4,10 @@
 
 import java.util.UUID;
 
+import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Ice.Util;
 
 import Demo.Clock;
-import Demo.MasterPrx;
 
 public class Subscriber
 {
@@ -17,12 +17,12 @@ public class Subscriber
     {
 
         @Override
-        public String tick(String date, com.zeroc.Ice.Current current)
+        public void tick(String date, com.zeroc.Ice.Current current)
         {
             System.out.println(date);
             Demo.MasterPrx master = Demo.MasterPrx.checkedCast(communicator.propertyToProxy("Master.Proxy"));
             master.getPartition();
-            return date;
+                        
         }
     }
 
@@ -31,7 +31,7 @@ public class Subscriber
         int status = 0;
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
-        com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
+        communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
         //
         // Destroy communicator during JVM shutdown
         //

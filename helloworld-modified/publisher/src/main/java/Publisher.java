@@ -31,6 +31,7 @@ public class Publisher
             com.zeroc.Ice.Object object = new MasterI();
 
             publisherAdapter.add(object, com.zeroc.Ice.Util.stringToIdentity("publi"));
+            publisherAdapter.activate();
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
 
@@ -137,7 +138,9 @@ public class Publisher
                     break;
                 }
                 int x = topic.getSubscribers().length;
+                System.out.println("Number of subscribers: " + x);
                 clock.tick(message);
+                
             
             }
         }
