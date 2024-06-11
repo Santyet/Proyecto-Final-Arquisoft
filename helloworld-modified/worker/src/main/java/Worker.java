@@ -14,11 +14,12 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 import com.zeroc.Ice.ObjectPrx;
 public class Worker
 {
+    public static com.zeroc.Ice.Communicator communicator;
 
     public static class StaticWorker implements WorkerI
     {
 
-        private Demo.MasterPrx service;
+        private Demo.MasterPrx service = Demo.MasterPrx.checkedCast(communicator.propertyToProxy("MasterI.Proxy"));
 
         public StaticWorker(Demo.MasterPrx service){
             this.service = service;
@@ -86,7 +87,7 @@ public class Worker
         int status = 0;
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
-        com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
+        communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
         //
         // Destroy communicator during JVM shutdown
         //

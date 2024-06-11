@@ -16,10 +16,18 @@ public class Server
                     System.out.println(v);
                 }
             }
-            com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Printer");
-            com.zeroc.Ice.Object object = new PrinterI();
-            adapter.add(object, com.zeroc.Ice.Util.stringToIdentity("SimplePrinter"));
-            adapter.activate();
+            com.zeroc.Ice.ObjectAdapter printerAdapter = communicator.createObjectAdapter("Printer");
+            com.zeroc.Ice.Object printerObject = new PrinterI();
+
+            com.zeroc.Ice.ObjectAdapter masterAdapter = communicator.createObjectAdapter("MasterI");
+            com.zeroc.Ice.Object masterObject = new MasterI(communicator);
+
+            printerAdapter.add(printerObject, com.zeroc.Ice.Util.stringToIdentity("SimplePrinter"));
+            printerAdapter.activate();
+
+            masterAdapter.add(masterObject, com.zeroc.Ice.Util.stringToIdentity("MasterService"));
+            masterAdapter.activate();
+            
             communicator.waitForShutdown();
         }
     }
